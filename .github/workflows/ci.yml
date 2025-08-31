@@ -28,4 +28,6 @@ jobs:
     - name: Run tests
       run: go test -v ./...
     - name: Build docker image
-      run: docker build -t instagram-gin .
+      run: |
+        docker build -t instagram-gin .
+        docker build -t instagram-gin-migrations ./migrations

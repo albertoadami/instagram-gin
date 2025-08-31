@@ -15,6 +15,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  migrations:
+    build:
+      context: ./migrations
+      dockerfile: Dockerfile
+    container_name: instagram-gin-migrations
+    environment:
+      - DATABASE_URL=postgres://user:password@postgres:5432/instagram_gin_db?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["-dir=/migrations", "postgres", "postgres://user:password@postgres:5432/instagram_gin_db?sslmode=disable", "up"]
+    restart: "no"  # Run once and exit
+
   app:
     build: .
     container_name: instagram-gin
@@ -29,6 +43,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      migrations:
+              condition: service_completed_successfully        
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 10s

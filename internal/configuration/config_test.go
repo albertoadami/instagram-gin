@@ -9,12 +9,11 @@ import (
 )
 
 func TestLoadConfigSuccessfully(t *testing.T) {
-	viper.AddConfigPath("../..") // project root for test
-	viper.AddConfigPath(".")     // current dir for local/dev
-	viper.AddConfigPath("/app")  // docker WORKDIR
+	viper.AddConfigPath("../..") // add project root as config path
 
-	configuration, err := LoadConfig()
-	assert.NoError(t, err)
+	configuration, error := LoadConfig()
+
+	assert.NoError(t, error)
 
 	dbConfig := configuration.Database
 
@@ -23,4 +22,5 @@ func TestLoadConfigSuccessfully(t *testing.T) {
 	assert.Equal(t, dbConfig.User, "postgres")
 	assert.Equal(t, dbConfig.Password, "password")
 	assert.Equal(t, dbConfig.Name, "instagram_gin_db")
+
 }
