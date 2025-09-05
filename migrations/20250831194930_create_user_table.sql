@@ -12,10 +12,10 @@ CREATE TABLE users (
     surname VARCHAR(100) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     gender user_gender NOT NULL,
-    birth_date DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    birth_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status user_status
+    status user_status NOT NULL
 );
 
 CREATE INDEX idx_users_username ON users(username);
